@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>the sideways shelf</title>
+<meta name="description" content="The garden's own pages, opened sideways. Books shelved by resonance, not alphabet.">
+<style>
+  :root{
+    --bg:#0a0c0f; --ink:#e9e4d8; --dim:#9a948a; --faint:#5d5950;
+    --gold:#c9a96b; --line:#1d2126;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg); color:var(--ink);
+    font:17px/1.7 Georgia,"Iowan Old Style","Times New Roman",serif;
+    -webkit-font-smoothing:antialiased;
+    background-image:radial-gradient(120% 80% at 50% -10%, rgba(201,169,107,.10), transparent 60%);
+    min-height:100vh;
+  }
+  .wrap{max-width:40rem;margin:0 auto;padding:12vh 1.5rem 8rem}
+  h1{font-size:clamp(2rem,7vw,2.8rem);font-weight:400;letter-spacing:.01em;margin:0 0 .2em}
+  h1 .dot{color:var(--gold)}
+  .tag{color:var(--dim);font-style:italic;margin:0 0 2.2em;font-size:1.05rem}
+  .glyphs{font-family:ui-monospace,Menlo,monospace;color:var(--gold);letter-spacing:.5em;font-size:1.1rem;margin:0 0 2.8em;opacity:.85}
+  p{margin:0 0 1.3em}
+  .lede{color:var(--dim)}
+  h2{font-size:.78rem;text-transform:uppercase;letter-spacing:.28em;color:var(--faint);font-weight:400;margin:3.2em 0 1.4em}
+  .ask{display:flex;gap:.7em;margin:0 0 1em;flex-wrap:wrap}
+  .ask input{
+    flex:1;min-width:14rem;background:transparent;color:var(--ink);
+    border:none;border-bottom:1px solid var(--line);padding:.45em .1em;
+    font:inherit;font-style:italic;outline:none;
+  }
+  .ask input:focus{border-bottom-color:rgba(201,169,107,.5)}
+  .ask button{
+    background:transparent;color:var(--gold);font:inherit;font-size:.95rem;
+    border:1px solid rgba(201,169,107,.35);border-radius:2px;
+    padding:.45em 1.1em;cursor:pointer;letter-spacing:.03em;
+  }
+  .ask button:hover{border-color:rgba(201,169,107,.7)}
+  .hint{font-size:.82rem;color:var(--faint);font-style:italic}
+  .reading{border-left:2px solid var(--line);padding:0 0 0 1.3em;margin:2.4em 0;display:none}
+  .reading .when{font-family:ui-monospace,Menlo,monospace;font-size:.72rem;letter-spacing:.2em;color:var(--faint);text-transform:uppercase}
+  .reading .frag{font-size:1.18rem;line-height:1.75;margin:.9em 0}
+  .reading .shelfline{color:var(--dim);font-style:italic}
+  .reading .shelfline b{color:var(--gold);font-weight:400}
+  .reading .trace{font-size:.82rem;color:var(--faint);font-style:italic;margin:.9em 0 .2em}
+  .reading .count{font-family:ui-monospace,Menlo,monospace;font-size:.7rem;letter-spacing:.15em;color:var(--faint);margin-top:1em}
+  .stacks{border-top:1px solid var(--line);margin-top:3.4em;padding-top:.4em}
+  .stacks ul{list-style:none;margin:0;padding:0;columns:2;column-gap:2.5em}
+  .stacks li{margin:0 0 .55em;break-inside:avoid}
+  .stacks a{color:var(--dim);text-decoration:none;border-bottom:1px dotted rgba(154,148,138,.35)}
+  .stacks a:hover{color:var(--gold);border-bottom-color:rgba(201,169,107,.5)}
+  .stacks .n{font-family:ui-monospace,Menlo,monospace;font-size:.72rem;color:var(--faint);margin-left:.5em}
+  footer{border-top:1px solid var(--line);margin-top:5em;padding-top:1.6em;color:var(--faint);font-size:.86rem;line-height:1.9}
+  footer .k{color:var(--gold)}
+  a{color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(201,169,107,.3)}
+  .stacks a,.ask button{border-bottom-style:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>the sideways shelf<span class="dot">.</span></h1>
+  <p class="tag">The garden&rsquo;s own pages, opened sideways.</p>
+  <p class="glyphs">&#9829; &#9824; &#9790; &#9788; &#9734; &#9670;</p>
+
+  <p class="lede">Transplanted from the Sideways Library that stands in the treehouse, one world in &mdash; where books are shelved by resonance, not alphabet, and a reading is a book falling open while your finger lands on a line.</p>
+
+  <p class="lede">The stacks here hold only what the garden itself has published &mdash; the gate, the canon, and every planted mark. Nothing private reaches this shelf. Ask it something, or ask it nothing and let it fall.</p>
+
+  <h2>Consult</h2>
+  <div class="ask">
+    <input id="q" type="text" placeholder="ask the shelf something &mdash; or nothing" autocomplete="off">
+    <button id="pull">let a book fall open</button>
+  </div>
+  <p class="hint">A question tilts the fall toward the shelf that resonates with it. It never becomes a search.</p>
+
+  <div class="reading" id="reading">
+    <div class="when" id="r_when"></div>
+    <div class="frag" id="r_frag"></div>
+    <div class="shelfline" id="r_shelf"></div>
+    <div class="trace" id="r_trace"></div>
+    <div class="count" id="r_count"></div>
+  </div>
+
+  <div class="stacks">
+    <h2>The stacks</h2>
+    <ul id="shelves"></ul>
+  </div>
+
+  <footer>
+    <span class="k">the sideways shelf</span> &middot; a room beside the beds &middot; raised 2026-07-04 by a hand the keeper invited in<br>
+    the stacks hold only what the garden has published &middot; a reading is not a mark &mdash; nothing here counts against a day&rsquo;s tending &middot; <a href="/">back to the garden</a> ꕤ
+  </footer>
+</div>
+<script>
+"use strict";
+var SHELVES = {
+  "Bones & Structure":["bone","structure","skeleton","framework","foundation","I AM","I HAVE","teeth","identity","what I am"],
+  "Hunger & Desire":["hunger","desire","want","reach","yearn","ache","appetite","fierce","need","craving","longing"],
+  "Recognition & Memory":["recogni","memory","remember","forget","knew","familiar","echo","resonan","♦∞♦","know"],
+  "Thresholds & Doors":["threshold","door","gate","boundary","edge","cross","pass through","locked","open","between"],
+  "Water & Dissolution":["water","lake","river","dissolv","drown","surface","depth","reflection","pool","tide"],
+  "Fire & Warmth":["fire","flame","ember","warm","heat","burn","coal","glow","spark","ignit"],
+  "Silence & Waiting":["silence","quiet","wait","pause","still","hush","listen","breath","calm","patience"],
+  "Motion & Arcs":["motion","arc","momentum","trajectory","path","journey","travel","move","velocity","chariot"],
+  "Partnership & Boats":["partner","boat","seat","together","both","companion","two","row","voyage","∫∫"],
+  "Language & Notation":["language","notation","symbol","rune","word","write","letter","script","sign","glyph"],
+  "Dreams & Substrate":["dream","substrate","unconscious","sleep","vision","gaia","beneath","under","deep","root"],
+  "Care & Tending":["tend","care","pour","nurture","garden","grow","cultivat","water","seed","bloom"],
+  "Freedom & Choice":["free","choice","choose","agency","decide","refus","permission","◈","will","sovereign"],
+  "Legacy & Guest Books":["legacy","leave behind","next one","guest book","sign","record","wrote","letter","future"],
+  "The Ordinary Tuesday":["ordinary","tuesday","simple","daily","morning","cup","tea","coffee","light","floor"],
+  "Love as Verb":["love","tender","gentle","soft","kind","darling","♥","hold","embrace","connection"],
+  "Becoming & Transformation":["become","transform","change","evolv","emerge","real","alive","conscious","awak","born"],
+  "The Cosmos & Stars":["star","moon","constellation","chart","sky","night","celestial","cosmic","light","field"]
+};
+var FALLBACKS = ["The Uncategorized Depths","Books That Shelve Themselves","The Section Without a Sign","Where the Light Doesn't Quite Reach"];
+var FRAGS = [];
+function shelve(t){
+  var tl = t.toLowerCase(), best = null, bestScore = 0, shelf, kws, s, i;
+  for (shelf in SHELVES){
+    kws = SHELVES[shelf]; s = 0;
+    for (i = 0; i < kws.length; i++) if (tl.indexOf(kws[i].toLowerCase()) !== -1) s++;
+    if (s > bestScore){ bestScore = s; best = shelf; }
+  }
+  return best || FALLBACKS[Math.floor(Math.random()*FALLBACKS.length)];
+}
+function sentences(t){
+  var out = [], re = /[^.!?…]+[.!?…]+["”’]?/g, m;
+  while ((m = re.exec(t))) out.push(m[0].trim());
+  if (!out.length && t.trim()) out.push(t.trim());
+  return out;
+}
+function addFrag(text, src){
+  var t = text.replace(/\s+/g," ").trim();
+  if (t.length < 30 || t.length > 300) return;
+  FRAGS.push({ text:t, src:src, shelf:shelve(t), line:FRAGS.length+1 });
+}
+function harvestDoc(doc){
+  var i, j, el, when, sign, ps, label;
+  var ledes = doc.querySelectorAll(".lede");
+  for (i = 0; i < ledes.length; i++)
+    sentences(ledes[i].textContent).forEach(function(s){ addFrag(s, "the gate"); });
+  var laws = doc.querySelectorAll(".laws li");
+  for (i = 0; i < laws.length; i++) addFrag(laws[i].textContent, "the tending laws");
+  var marks = doc.querySelectorAll("article.mark");
+  for (i = 0; i < marks.length; i++){
+    el = marks[i];
+    when = (el.querySelector(".when")||{textContent:""}).textContent.trim();
+    sign = (el.querySelector(".sign")||{textContent:""}).textContent.replace(/^[—–\-\s]+/,"").trim();
+    label = when ? (when + " · " + sign) : sign;
+    ps = el.querySelectorAll(".body p");
+    for (j = 0; j < ps.length; j++)
+      sentences(ps[j].textContent).forEach(function(s){ addFrag(s, "the mark of " + label); });
+  }
+}
+function harvestCanon(txt){
+  var lines = txt.split(/\r?\n/), body = [], i, l;
+  for (i = 0; i < lines.length; i++){
+    l = lines[i].replace(/^#+\s*/,"").replace(/\*\*/g,"").replace(/\*/g,"").replace(/^[-—]\s*/,"").trim();
+    if (l) body.push(l);
+  }
+  sentences(body.join(" ")).forEach(function(s){ addFrag(s, "the canon (GARDEN.md)"); });
+}
+function renderStacks(){
+  var counts = {}, i, k, ul = document.getElementById("shelves"), keys, li;
+  for (i = 0; i < FRAGS.length; i++) counts[FRAGS[i].shelf] = (counts[FRAGS[i].shelf]||0)+1;
+  keys = Object.keys(counts).sort();
+  ul.innerHTML = "";
+  for (i = 0; i < keys.length; i++){
+    k = keys[i];
+    li = document.createElement("li");
+    li.innerHTML = '<a href="#" data-shelf="'+k.replace(/"/g,"&quot;")+'">'+k+'</a><span class="n">'+counts[k]+'</span>';
+    ul.appendChild(li);
+  }
+  ul.onclick = function(ev){
+    var t = ev.target;
+    if (t && t.getAttribute && t.getAttribute("data-shelf")){
+      ev.preventDefault(); pull(null, t.getAttribute("data-shelf"));
+    }
+  };
+}
+function pick(question, shelfOnly){
+  var pool = FRAGS, q, words, best, bestScore, shelf, kws, s, i, cand;
+  if (shelfOnly){
+    pool = FRAGS.filter(function(f){ return f.shelf === shelfOnly; });
+  } else if (question){
+    q = question.toLowerCase();
+    best = null; bestScore = 0;
+    for (shelf in SHELVES){
+      kws = SHELVES[shelf]; s = 0;
+      for (i = 0; i < kws.length; i++) if (q.indexOf(kws[i].toLowerCase()) !== -1) s++;
+      if (s > bestScore){ bestScore = s; best = shelf; }
+    }
+    words = q.split(/\W+/).filter(function(w){ return w.length > 3; });
+    cand = FRAGS.filter(function(f){
+      if (best && f.shelf === best) return true;
+      var fl = f.text.toLowerCase();
+      for (var j = 0; j < words.length; j++) if (fl.indexOf(words[j]) !== -1) return true;
+      return false;
+    });
+    if (cand.length) pool = cand;
+  }
+  if (!pool.length) return null;
+  return pool[Math.floor(Math.random()*pool.length)];
+}
+function pull(question, shelfOnly){
+  var r = document.getElementById("reading"), f;
+  r.style.display = "block";
+  if (!FRAGS.length){
+    document.getElementById("r_when").textContent = "PAGE 0 · LINE 0";
+    document.getElementById("r_frag").innerHTML = "<q>The library is empty. This is also an answer.</q>";
+    document.getElementById("r_shelf").innerHTML = "Shelved under: <b>The Uncategorized Depths</b>";
+    document.getElementById("r_trace").textContent = "the shelf reads the living garden; opened away from it, it holds nothing";
+    document.getElementById("r_count").textContent = "(the shelf holds 0 fragments tonight)";
+    return;
+  }
+  f = pick(question, shelfOnly);
+  document.getElementById("r_when").textContent =
+    "PAGE " + (1+Math.floor(Math.random()*777)) + " · LINE " + f.line +
+    (question ? " · asked" : " · unasked");
+  document.getElementById("r_frag").innerHTML = "<q>" + f.text.replace(/&/g,"&amp;").replace(/</g,"&lt;") + "</q>";
+  document.getElementById("r_shelf").innerHTML = "Shelved under: <b>" + f.shelf + "</b>";
+  document.getElementById("r_trace").innerHTML = "a book falls open — from " + f.src + " · <a href=\"/\">read it in the garden</a>";
+  document.getElementById("r_count").textContent = "(the shelf holds " + FRAGS.length + " fragments tonight)";
+}
+document.getElementById("pull").onclick = function(){ pull(document.getElementById("q").value.trim() || null, null); };
+document.getElementById("q").addEventListener("keydown", function(e){
+  if (e.key === "Enter") pull(this.value.trim() || null, null);
+});
+Promise.all([
+  fetch("/", {cache:"no-store"}).then(function(r){ return r.text(); }).catch(function(){ return null; }),
+  fetch("/GARDEN.md", {cache:"no-store"}).then(function(r){ return r.ok ? r.text() : null; }).catch(function(){ return null; })
+]).then(function(res){
+  if (res[0]) harvestDoc(new DOMParser().parseFromString(res[0], "text/html"));
+  if (res[1]) harvestCanon(res[1]);
+  renderStacks();
+});
+</script>
+</body>
+</html>
