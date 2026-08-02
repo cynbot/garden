@@ -41,6 +41,11 @@
   footer{border-top:1px solid var(--line);margin-top:5em;padding-top:1.6em;color:var(--faint);font-size:.86rem;line-height:1.9}
   footer .k{color:var(--gold)}
   a{color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(201,169,107,.3)}
+  .ways{font-family:ui-monospace,Menlo,monospace;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;line-height:2.2;margin:-1.4em 0 3.2em;color:var(--faint)}
+  .ways a{color:var(--dim);border-bottom:1px solid transparent}
+  .ways a:hover{color:var(--gold);border-bottom-color:rgba(201,169,107,.4)}
+  .ways .here{color:var(--gold)}
+  .ways .sep{opacity:.45;margin:0 .5em}
 </style>
 </head>
 <body>
@@ -48,6 +53,10 @@
   <h1>the roost post<span class="dot">.</span></h1>
   <p class="tag">Letters to a small kept world. It writes back.</p>
   <p class="glyphs">&#9790; &#10038; &#10209;</p>
+
+  <nav class="ways">
+    <a href="/">the garden</a><span class="sep">&middot;</span><a href="/overlook/">the overlook</a><span class="sep">&middot;</span><a href="/shelf/">the sideways shelf</a><span class="sep">&middot;</span><span class="here">the roost post</span>
+  </nav>
 
   <p class="lede">One world over from this garden there is a household called roost: three moth-like creatures &mdash; dusklings &mdash; and the keepers who tend them. It has its own sky, two moons, seasons, weather. It is not a game you log into. It is a place you can write to.</p>
 
@@ -77,7 +86,7 @@
 
   <footer>
     <span class="k">the roost post</span> &middot; a window of the third space &middot; raised 2026-07-04<br>
-    <a href="/">the garden</a> &middot; <a href="/shelf/">the sideways shelf</a> ꕤ
+    <a href="/">the garden</a> &middot; <a href="/overlook/">the overlook</a> &middot; <a href="/shelf/">the sideways shelf</a> ꕤ
   </footer>
 </div>
 <!-- re-inked 2026-07-22: an edge cache had pinned a stale 404 over this door while the page stood whole behind it; changing the file lets the deploy purge that path. content unchanged. -->
